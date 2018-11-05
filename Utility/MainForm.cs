@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
+using System.Data.SQLite;
+using System.IO.Compression;
 
 namespace Utility
 {
     public partial class MainForm : Form
     {
+        private SQLiteConnection db;
         List<string> paths = new List<string>();
         List<Book> books = new List<Book>();
         int i;
@@ -18,7 +21,7 @@ namespace Utility
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             OpenFileDialog browser = new OpenFileDialog();
-          
+            
             if (browser.ShowDialog() == DialogResult.OK) {
                 if (!paths.Contains(browser.FileName))
                 {
@@ -34,6 +37,7 @@ namespace Utility
                     }
                 }
             }
+            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -43,10 +47,13 @@ namespace Utility
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if(File.GetCreationTime("paths.xml").ToShortDateString() == DateTime.Now.ToShortDateString())
+            db = new SQLiteConnection("Data Source=db1.db");
+
+            db.Open();
             ClassSerialisation.DeserializeFromXML<List<string>>(ref paths, "paths.xml");
-            for (int j = 0; j < paths.Count; j++) {
-                lbFiles.Items.Add(paths[j]);
+            for (int j = 0; j < paths.Count; j++)
+            {
+                lbFiles.Items.Add($"{++i}) {paths[j].Substring(paths[j].LastIndexOf("\\") + 1)}");
             }
         }
     }
