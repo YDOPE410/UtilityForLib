@@ -42,19 +42,19 @@ namespace Utility
                             authors = books[j].author.Split(new string[] { ", " }, StringSplitOptions.None);
                             for (int l = 0; l < authors.Length - 1; l++)
                             {
-                                cmd.CommandText = $"insert into Authors('name') values('{authors[l]}')";
+                                cmd.CommandText = $"insert into Authors('name') values('{authors[l].ToString().Replace("\'", "`")}')";
                                 cmd.ExecuteNonQuery();
                             }
                             cmd.CommandText = $"DELETE FROM Authors WHERE id NOT IN(SELECT MIN(id) FROM Authors GROUP BY name)";
                             cmd.ExecuteNonQuery();
 
-                            cmd.CommandText = $"insert into Publishers('city', 'name') values('{books[j].city}','{books[j].pubHouse}')";
+                            cmd.CommandText = $"insert into Publishers('city', 'name') values('{books[j].city.Replace("\'", "`")}','{books[j].pubHouse.Replace("\'", "`")}')";
                             cmd.ExecuteNonQuery();
                             cmd.CommandText = $"DELETE FROM Publishers WHERE id NOT IN( SELECT MIN(id) FROM Publishers GROUP BY name, city)";
                             cmd.ExecuteNonQuery();
 
 
-                            cmd.CommandText = $"select id from Publishers where city = '{books[j].city}' and name = '{books[j].pubHouse}'";
+                            cmd.CommandText = $"select id from Publishers where city = '{books[j].city}' and name = '{books[j].pubHouse.Replace("\'", "`")}'";
                             id = cmd.ExecuteScalar();
                             cmd.CommandText = $"insert into Books('name','publisher_id','year','pages_count', 'is_pictures', 'examples_count', 'is_CD') values('{books[j].name.ToString().Replace("\'", "`")}','{id}', '{books[j].year}', '{books[j].page}', '{books[j].image}', '{books[j].instance}', '{books[j].cd}')";
                             cmd.ExecuteNonQuery();
@@ -63,7 +63,7 @@ namespace Utility
 
                             for (int l = 0; l < authors.Length - 1; l++)
                             {
-                                cmd.CommandText = $"insert into Books_Authors('book_id', 'author_id') values((select id from Books where name = '{books[j].name.ToString().Replace("\'", "`")}'),(select id from Authors where name = '{authors[l]}'))";
+                                cmd.CommandText = $"insert into Books_Authors('book_id', 'author_id') values((select id from Books where name = '{books[j].name.ToString().Replace("\'", "`")}'),(select id from Authors where name = '{authors[l].ToString().Replace("\'", "`")}'))";
                                 cmd.ExecuteNonQuery();
                             }
 
