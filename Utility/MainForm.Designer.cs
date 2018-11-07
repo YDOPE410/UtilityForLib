@@ -41,6 +41,7 @@
             this.cd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.image = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lbFiles = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTables)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,11 +132,22 @@
             this.lbFiles.Size = new System.Drawing.Size(297, 95);
             this.lbFiles.TabIndex = 3;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(626, 274);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(808, 357);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lbFiles);
             this.Controls.Add(this.dgvTables);
             this.Controls.Add(this.btnBrowse);
@@ -162,6 +174,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cd;
         private System.Windows.Forms.DataGridViewTextBoxColumn image;
         private System.Windows.Forms.ListBox lbFiles;
+        private System.Windows.Forms.Button button1;
     }
 }
 
