@@ -53,7 +53,6 @@ namespace Utility
                             cmd.CommandText = $"DELETE FROM Publishers WHERE id NOT IN( SELECT MIN(id) FROM Publishers GROUP BY name, city)";
                             cmd.ExecuteNonQuery();
 
-
                             cmd.CommandText = $"select id from Publishers where city = '{books[j].city}' and name = '{books[j].pubHouse.Replace("\'", "`")}'";
                             id = cmd.ExecuteScalar();
                             cmd.CommandText = $"insert into Books('name','publisher_id','year','pages_count', 'is_pictures', 'examples_count', 'is_CD') values('{books[j].name.ToString().Replace("\'", "`")}','{id}', '{books[j].year}', '{books[j].page}', '{books[j].image}', '{books[j].instance}', '{books[j].cd}')";
